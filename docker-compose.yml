@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  webserver:
+    container_name: webserver-crickettracker
+    build: ./
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  
+  db:
+    container_name: db-master-crickettracker
+    image: postgres:14.7-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=crickettracker
+
+  pgadmin:
+    container_name: pgadmin4-crickettracker
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@crickettracker.in
+      PGADMIN_DEFAULT_PASSWORD: root123
+    ports:
+      - "5051:80"
+
+volumes:
+  pgdata:
+  
