@@ -38,9 +38,27 @@
 		},
 		{
 			"name": "get live score",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true
+				}
+			},
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/live-score/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"live-score",
+						"2"
+					]
+				}
 			},
 			"response": []
 		}
