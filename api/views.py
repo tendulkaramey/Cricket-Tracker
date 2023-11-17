@@ -14,8 +14,6 @@ class LiveMatchScore(APIView):
         #check in cache else db
         score = cache.get('match'+str(matchid))
         if score is not None:
-            print('***************'*20)
-            print(score)
             score = json.loads(score)
             return JsonResponse({
                 'success': True,
@@ -31,7 +29,6 @@ class LiveMatchScore(APIView):
                 'userMessage': 'Not Found',
             }, status = api_response_status.HTTP_404_NOT_FOUND)
             
-
         latest_score = TournamentMatch.objects.filter(match=match).order_by('-id')
         if latest_score.count():
             score = TournamanetMatchSerializer(latest_score[0])
@@ -111,8 +108,6 @@ class AddLiveScore(APIView):
         score = score.data
         score = json.dumps(score)
         cache.set('match'+str(matchid), score, 120)
-
-        
 
         return JsonResponse({
             'success': True,
