@@ -26,10 +26,8 @@ services:
 
   cache:
     image: redis:7.2.3-alpine
-    volumes: 
-      - cachedata:/data
     restart: always
-    command: redis-server --save 20 1 --loglevel warning --requirepass pass123
+    command: redis-server --loglevel warning --requirepass pass123
     ports:
       - "6379:6379"
 
@@ -45,5 +43,4 @@ services:
 
 volumes:
   pgdata:
-  cachedata:
   

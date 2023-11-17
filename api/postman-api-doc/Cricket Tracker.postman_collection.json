@@ -1,0 +1,48 @@
+{
+	"info": {
+		"_postman_id": "dda7b648-3a19-420f-ade9-26e39ef75dc5",
+		"name": "Cricket Tracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7204039"
+	},
+	"item": [
+		{
+			"name": "add score",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"batting_team\":1,\r\n    \"bowling_team\":2,\r\n    \"bowler\":3,\r\n    \"batsman_at_strike\":4,\r\n    \"batsman_at_nonstrike\":5,\r\n    \"inning\":1,\r\n    \"over\":3,\r\n    \"ball\":2,\r\n    \"runs\":6,\r\n    \"is_extra\":false,\r\n    \"extra\": \"\",\r\n    \"is_wicket\":false,\r\n    \"stats\":{\r\n        \"score\":\"1-1\",\r\n        \"bowler-economy\":\"3.4\"\r\n    }\r\n\r\n\r\n    'inning', 'over', 'ball', 'runs', 'is_extra', 'extra', 'is_wicket', 'stats'\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/add-score/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"add-score",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get live score",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

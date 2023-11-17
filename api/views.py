@@ -22,7 +22,7 @@ class LiveMatchScore(APIView):
                 'userMessage': 'from cache!',
                 'data': score,
             }, status = api_response_status.HTTP_200_OK)
-            
+
         try:
             match = TournamentFixture.objects.get(id=matchid)
         except TournamentFixture.DoesNotExist:
@@ -36,6 +36,7 @@ class LiveMatchScore(APIView):
         if latest_score.count():
             score = TournamanetMatchSerializer(latest_score[0])
             score = score.data
+            cache.set('match2', json.dumps(score), 60)
         else:
             score = []
 

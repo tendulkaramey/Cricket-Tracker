@@ -4,9 +4,11 @@ Project demonstrates how we can implement caching in  Django framework using red
 
 ## Project Brief
 
-Suppose we are a company called Cricket Tracker and our main job is to provide live cricket score ball by ball and along with score, every possible stats and commentary should be given in response.Team from ground will update the score using our UI and api to database.Millions of user will requests for live score of a match and if we pass all the requests to database then it can overwhelm the database.But if seen, for every live score it will do the same computation and query evaluation so why not do it once and save in cache and then serve the requests using cache which will not put burden on database and also lower the response time. We are using redis for caching.  <br>
+As Cricket Tracker, our core function is to deliver real-time cricket scores, inclusive of detailed statistics and commentary, ball by ball. Our system involves ground teams updating scores via our UI and API, which are then stored in our database. With millions of users seeking live match scores, directing all these requests to the database could potentially overwhelm it.<br>
 
-We will update the cache as soon as we receive next live score from our team and thus old record in cache will be replaced for new one. Even if our cache went down due to some issue, for some time we can serve requests from database till we get cache up and running again. <br>
+Considering that each live score update entails the same computations and query evaluations, it seems more efficient to perform these actions once and store the results in a cache. By utilizing Redis for caching, we can significantly reduce the strain on our database, ensuring quicker response times and reducing the load on our infrastructure. <br>
+
+Our strategy involves promptly updating the cache with the latest live scores as soon as they're received from our ground team. This approach ensures that older cache records are replaced with the most recent information. In the event of a cache failure, we have a contingency plan in place: for a temporary period, we'll serve requests directly from the database until the cache is operational again. This ensures continuous service delivery and minimizes disruption to our users even during cache downtime. <br>
 
 This is a POC (proof of concept) project aimed to learn and implement system design concepts from real life problem statements.
 
@@ -27,7 +29,9 @@ This is a POC (proof of concept) project aimed to learn and implement system des
 
 use the postman collection to test and run the api.
 
-docker-compose exec cache redis-cli -a pass123 : run this in terminal and try on different redis operations. you can check for keys once you hit the add live score api, you will see the key added in redis cache.
+docker-compose exec cache redis-cli -a pass123 : run this in terminal and try on different redis operations. you can check for keys once you hit the add live score api, you will see the key added in redis cache.<br>
+
+Review the SQL logs to note that when the "get live score" API retrieves data from the cache, it operates without any database calls. This absence of database queries optimizes response times, enabling us to handle a higher volume of requests concurrently by using caching efficiently.
 
 
 ## References:
