@@ -24,6 +24,15 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=crickettracker
 
+  cache:
+    image: redis:7.2.3-alpine
+    volumes: 
+      - cachedata:/data
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning --requirepass pass123
+    ports:
+      - "6379:6379"
+
   pgadmin:
     container_name: pgadmin4-crickettracker
     image: dpage/pgadmin4
@@ -36,4 +45,5 @@ services:
 
 volumes:
   pgdata:
+  cachedata:
   

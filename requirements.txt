@@ -6,3 +6,4 @@ tzdata==2023.3
 psycopg2==2.9.6
 djangorestframework==3.14.0
 Faker==19.12.0
+django-redis==5.4.0
