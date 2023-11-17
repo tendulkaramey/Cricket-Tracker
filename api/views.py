@@ -36,7 +36,7 @@ class LiveMatchScore(APIView):
         if latest_score.count():
             score = TournamanetMatchSerializer(latest_score[0])
             score = score.data
-            cache.set('match2', json.dumps(score), 60)
+            cache.set('match'+str(matchid), json.dumps(score), 120)
         else:
             score = []
 
@@ -110,7 +110,7 @@ class AddLiveScore(APIView):
         score = TournamanetMatchSerializer(latest_score[0])
         score = score.data
         score = json.dumps(score)
-        cache.set('match2', score, 60)
+        cache.set('match'+str(matchid), score, 120)
 
         
 
