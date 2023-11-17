@@ -6,7 +6,7 @@ Project demonstrates how we can implement caching in  Django framework using red
 
 As Cricket Tracker, our core function is to deliver real-time cricket scores, inclusive of detailed statistics and commentary, ball by ball. Our system involves ground teams updating scores via our UI and API, which are then stored in our database. With millions of users seeking live match scores, directing all these requests to the database could potentially overwhelm it.<br>
 
-Considering that each live score update entails the same computations and query evaluations, it seems more efficient to perform these actions once and store the results in a cache. By utilizing Redis for caching, we can significantly reduce the strain on our database, ensuring quicker response times and reducing the load on our infrastructure. <br>
+Considering that each live score update entails the same computations and query evaluations, it seems more efficient to perform these actions once and store the results in a cache. By utilizing Redis for caching, we can significantly reduce the strain on our database, ensuring quicker response times and reducing the load on database. <br>
 
 Our strategy involves promptly updating the cache with the latest live scores as soon as they're received from our ground team. This approach ensures that older cache records are replaced with the most recent information. In the event of a cache failure, we have a contingency plan in place: for a temporary period, we'll serve requests directly from the database until the cache is operational again. This ensures continuous service delivery and minimizes disruption to our users even during cache downtime. <br>
 
