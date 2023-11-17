@@ -29,7 +29,7 @@ This is a POC (proof of concept) project aimed to learn and implement system des
 
 use the postman collection to test and run the api.
 
-docker-compose exec cache redis-cli -a pass123 : run this in terminal and try on different redis operations. you can check for keys once you hit the add live score api, you will see the key added in redis cache.<br>
+docker-compose exec cache redis-cli -a pass123 : run this in terminal and try different redis operations. you can check for keys once you hit the add live score api, you will see the key added in redis cache.<br>
 
 Review the SQL logs to note that when the "get live score" API retrieves data from the cache, it operates without any database calls. This absence of database queries optimizes response times, enabling us to handle a higher volume of requests concurrently by using caching efficiently.
 
