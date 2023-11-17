@@ -11,14 +11,6 @@ class LiveMatchScore(APIView):
 
     def get(self, request, matchid, format=None):
 
-        try:
-            match = TournamentFixture.objects.get(id=matchid)
-        except TournamentFixture.DoesNotExist:
-            return JsonResponse({
-                'success': False,
-                'userMessage': 'Not Found',
-            }, status = api_response_status.HTTP_404_NOT_FOUND)
-        
         #check in cache else db
         score = cache.get('match'+str(matchid))
         if score is not None:
@@ -30,7 +22,15 @@ class LiveMatchScore(APIView):
                 'userMessage': 'from cache!',
                 'data': score,
             }, status = api_response_status.HTTP_200_OK)
-        
+            
+        try:
+            match = TournamentFixture.objects.get(id=matchid)
+        except TournamentFixture.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'userMessage': 'Not Found',
+            }, status = api_response_status.HTTP_404_NOT_FOUND)
+            
 
         latest_score = TournamentMatch.objects.filter(match=match).order_by('-id')
         if latest_score.count():

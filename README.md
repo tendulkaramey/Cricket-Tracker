@@ -23,6 +23,12 @@ This is a POC (proof of concept) project aimed to learn and implement system des
 7. use the api to get latest live score that has been posted.
 8. you can use pgadmin tool to login and view your database. username and password is in docker-compose file. it works on port 5051.
 
+## Running
+
+use the postman collection to test and run the api.
+
+docker-compose exec cache redis-cli -a pass123 : run this in terminal and try on different redis operations. you can check for keys once you hit the add live score api, you will see the key added in redis cache.
+
 
 ## References:
 
