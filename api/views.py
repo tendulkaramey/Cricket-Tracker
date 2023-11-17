@@ -12,12 +12,34 @@ class LiveMatchScore(APIView):
     def get(self, request, matchid, format=None):
 
         #check in cache else db
-        score = cache.get('match'+str(matchid))
-        if score is not None:
-            score = json.loads(score)
+        try:
+            score = cache.get('match'+str(matchid))
+            if score is not None:
+                score = json.loads(score)
+                return JsonResponse({
+                    'success': True,
+                    'userMessage': 'from cache!',
+                    'data': score,
+                }, status = api_response_status.HTTP_200_OK)
+        except Exception as e:
+            #send alert to team informing redis is down or having some issue.
+            try:
+                match = TournamentFixture.objects.get(id=matchid)
+            except TournamentFixture.DoesNotExist:
+                return JsonResponse({
+                    'success': False,
+                    'userMessage': 'Not Found',
+                }, status = api_response_status.HTTP_404_NOT_FOUND)
+                
+            latest_score = TournamentMatch.objects.filter(match=match).order_by('-id')
+            if latest_score.count():
+                score = TournamanetMatchSerializer(latest_score[0])
+                score = score.data
+            else:
+                score = []
             return JsonResponse({
                 'success': True,
-                'userMessage': 'from cache!',
+                'userMessage': '',
                 'data': score,
             }, status = api_response_status.HTTP_200_OK)
 
@@ -107,7 +129,15 @@ class AddLiveScore(APIView):
         score = TournamanetMatchSerializer(latest_score[0])
         score = score.data
         score = json.dumps(score)
-        cache.set('match'+str(matchid), score, 120)
+        try:
+            cache.set('match'+str(matchid), score, 120)
+        except Exception as e:
+            #send alert to team informing redis is down or having some issue.
+            return JsonResponse({
+                'success': True,
+                'userMessage': 'score added',
+                'data': [],
+            }, status = api_response_status.HTTP_200_OK)
 
         return JsonResponse({
             'success': True,
